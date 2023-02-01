@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Instrument panel recognition and readout</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+</head>
+<body>
+  <div class="row" style="margin-top: 20px;">
+    <div class="col"></div>
+    <div class="col-8">
+      <div style="float:left;">
+        <a href="javascript:;" class="file">Select file
+          <input type="file" name="file" id="file0"><br>
+        </a>
+        <img src="" id="img0" style="margin-top:20px;width: 35rem;height: 30rem;">
+      </div>
+
+      <form name="value" action="/" method="post" >
+        <div class="form-group">
+          <input type="text" name="value_min" class="form-control" placeholder="Please enter the minimum range:">
+        </div>
+        <div class="form-group">
+          <input type="text" name="value_max" class="form-control" placeholder="Please enter the maximum range:">
+        </div>
+
+      </form>
+
+      <div style="float:left;margin-left:50px;">
+        <input type="button" id="b0" onclick="test()" value="Identify">
+        <pre  id="out" style="width:320px;height:50px;line-height: 50px;margin-top:20px;"></pre>
+      </div>
+
+    </div>
+    <div class="col"></div>
+  </div>
+</body>
+</html>

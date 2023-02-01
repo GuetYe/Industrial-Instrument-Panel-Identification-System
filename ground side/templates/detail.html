@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{{ panel.panel }}{% endblock %}
+
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/detail.css') }}">
+{% endblock %}
+
+
+{% block body %}
+  <div class="container">
+    <div class="row" style="margin-top: 20px;">
+      <div class="col"></div>
+      <div class="col-4">
+        <form method="post">
+          <button type="submit">Back</button>
+        </form>
+        <img src="data:;base64,{{ panel.image_data }}" style="margin-top: 20px; margin-left: 90px">
+        <p class="panel-value" style="margin-top: 20px; text-align: center">读数:{{ panel.value }}</p>
+        <p class="panel-minvalue" style="text-align: center">量程最大值：{{ panel.min_value }}</p>
+        <p class="panel-maxvalue" style="text-align: center">量程最小值：{{ panel.max_value }}</p>
+
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+
+{% endblock %}

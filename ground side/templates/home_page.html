@@ -1,0 +1,49 @@
+{% extends "base.html"%}
+
+{% block title %}Intelligent Instrument Panel Detection and Recognition System{% endblock %}
+
+{% block head %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src='../static/client.js'></script>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+            <!--<h3>请选择图片文件：PNG/JPG/JPEG/SVG/GIF</h3>-->
+            <div style="text-align:center;margin-top:50px;"  >
+                <div class="col"></div>
+                <div class="col-4">
+                  <div class='no-display'>
+                     <form action = "/detection" method = "POST"
+                       enctype = "multipart/form-data">
+                       <div>
+                         <input id='file-input'
+                               class='no-display'
+                               type='file'
+                               name='images'
+                               accept='image/png,image/jpeg,image/jpg,video/mp4,video/avi'
+                               onchange='showPicked(this)'>
+                        </div>
+<!--                        <button class='choose-file-button' type='button' onclick='showPicker()'>11111</button>-->
+
+                        <div class='upload-label'>
+                          <label id='upload-label'></label>
+                        </div>
+
+                        <div>
+                          <img id='image-picked' class='no-display' alt='Chosen Image' height='250'>
+<!--                          <video autoplay="autoplay" id='image-picked1' class='no-display' alt='Chosen Image' height='250'>-->
+                        </div>
+
+                        <div class='analyze' >
+                          <button id="analyze-button" class="analyze-button" type = "submit"  style="text-align:center">检测</button>
+                        </div>
+
+                    </form>
+                  </div>
+                </div>
+                <div class="col"></div>
+            </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html"%}
+
+{% block title %}
+    View instrument panel information already recognised
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}" class="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <div class="row" style="margin-top:20px;" >
+      <div class="col"></div>
+      <div class="col-8">
+         <ul class="panel-ul">
+              <table border="1px">
+                <tr style="background-color:#fff">
+                  <th>instrument panel</th>
+                  <th>Instrument panel number</th>
+                  <th>Minimum range</th>
+                  <th>Maximum range</th>
+                  <th>Identification results</th>
+                  <th>Identification time</th>
+                </tr>
+                {% for panel in panels %}
+                  <tr>
+                    <td><a href="{{url_for('panel_detail',panel_id=panel.id)}}" >{{ panel.panel }}</a></td>
+                    <td>{{ panel.number }}</td>
+                    <td>{{ panel.min_value }}</td>
+                    <td>{{ panel.max_value }}</td>
+                    <td>{{ panel.value }}</td>
+                    <td>{{ panel.creat_time }}</td>
+                  </tr>
+                {% endfor %}
+              </table>
+          </ul>
+      </div>
+      <div class="col"></div>
+    </div>
+{% endblock %}

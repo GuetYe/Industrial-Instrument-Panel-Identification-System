@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}11111{% endblock %}
+
+
+{% block head %}
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
+
+
+ <div class="col"></div>
+  <div class="col-4">
+    <p id="filename">{{ filename }}</p>
+
+         {% for count in count_list %}
+
+               <img src="data:;base64,{{ img_list[count] }}" id="img{{count}}">
+               <form name="value{{count}}"  method="post" style="text-align:left;">
+
+                 <div class="form-group">
+                   <label style="text-align:center;">请输入量程最小值：</label>
+                   <input type="text" name="value_min" class="form-control">
+                 </div>
+                 <div class="form-group">
+                   <label style="text-align:center;">请输入量程最大值：</label>
+                   <input type="text" name="value_max" class="form-control">
+                 </div>
+                 <div style="text-align:center;">
+                   <button class="btn btn-outline-secondary" type="button" id="identify" onclick="bindCaptchBtnClick('{{count}}')">检测</button>
+                   <pre  id="out{{count}}" style="width:320px;height:50px;line-height: 50px;margin-top:20px;"></pre>
+                 </div>
+               </form>
+
+            <style>
+                .file {
+                    position: relative;
+                    /*display: inline-block;*/
+                    background: #CCC ;
+                    border: 1px solid #CCC;
+                    padding: 4px 4px;
+                    overflow: hidden;
+                    text-decoration: none;
+                    text-indent: 0;
+                    width:100px;
+                    height:30px;
+                    line-height: 30px;
+                    border-radius: 5px;
+                    color: #333;
+                    font-size: 13px;
+
+                }
+                .file input {
+                    position: absolute;
+                    font-size: 13px;
+                    right: 0;
+                    top: 0;
+                    opacity: 0;
+                    border: 1px solid #333;
+                    padding: 4px 4px;
+                    overflow: hidden;
+                    text-indent: 0;
+                    width:100px;
+                    height:30px;
+                    line-height: 30px;
+                    border-radius: 5px;
+                    color: #FFFFFF;
+
+                }
+                #b0{
+                    background: #1899FF;
+                    border: 1px solid #CCC;
+                    padding: 4px 10px;
+                    overflow: hidden;
+                    text-indent: 0;
+                    width:60px;
+                    height:28px;
+                    line-height: 20px;
+                    border-radius: 5px;
+                    color: #FFFFFF;
+                    font-size: 13px;
+                }
+
+                /*.gradient{*/
+
+                    /*filter:alpha(opacity=100 finishopacity=50 style=1 startx=0,starty=0,finishx=0,finishy=150) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#fff,endcolorstr=#ccc,gradientType=0);*/
+                    /*-ms-filter:alpha(opacity=100 finishopacity=50 style=1 startx=0,starty=0,finishx=0,finishy=150) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#fff,endcolorstr=#ccc,gradientType=0);!*IE8*!*/
+                    /*background:#1899FF; !* 一些不支持背景渐变的浏览器 *!*/
+                    /*background:-moz-linear-gradient(top, #fff, #1899FF);*/
+                    /*background:-webkit-gradient(linear, 0 0, 0 bottom, from(#fff), to(#ccc));*/
+                    /*background:-o-linear-gradient(top, #fff, #ccc);*/
+                /*}*/
+            </style>
+         {% endfor %}
+  </div>
+  <div class="col"></div>
+
+
+<script type="text/javascript">
+
+              function bindCaptchBtnClick(count) {
+
+                      var img = document.getElementById("img"+count).src;
+                      var value_min = document.forms["value"+count]["value_min"].value;
+                      var value_max = document.forms["value"+count]["value_max"].value;
+                      var filename = document.getElementById("filename").innerHTML;
+                      var number = count;
+                      var form = new FormData();
+                      form.append("img", img);
+                      form.append("value_min",value_min);
+                      form.append("value_max",value_max);
+                      form.append("filename",filename);
+                      form.append("number",number)
+                      var out='';
+                      var flower='';
+                      // 通过js发送网络请求:ajax。Async JavaScript And XML(JSON)
+                      $.ajax({
+                          url:"identify",
+                          method:"POST",
+                          data:form,
+                          async: false,       //同步执行
+                          processData: false, // 告诉jquery要传输data对象
+                          contentType: false, //告诉jquery不需要增加请求头对于contentType的设置
+                          success: function (arg) {
+                              console.log(arg)
+                              out = arg.result;
+                              },error:function(){
+                              console.log("后台处理错误");
+                          }
+                      });
+                      out.forEach(e=>{
+                      // flower+=`<!--<div id="demo">这是内容</div>-->`
+                      flower+=`<div style="border-bottom: 1px solid #CCCCCC;line-height: 60px;font-size:16px;">${e}</div>`
+                  });
+                  document.getElementById("out"+count).innerHTML=flower;
+              }
+              // 等网页文档所有元素都加载完成后在执行
+              // $(function () {
+              //     bindCaptchBtnClick();
+              // })
+
+            </script>
+{% endblock %}
